@@ -1,14 +1,7 @@
 # Myth:collection
 
-Provides a fluent wrapper around an array of data.
+Class: `Myth\Collection\Collection`
 
-## Creating a new collection
+The `Collection` class provides a set of functions to work with arrays. It combines some of the best features from Javascript's Array object, PHP's array, and even borrowed ideas from other frameworks.
 
-A new collection is created by creating a new instance of `Myth\Collection\Collection`. You can populate the items
-in the collection at instantation by passing an array into the constructor.
-
-```php
-use Myth\Collection\Collection;
-
-$collection = new Collection([1,2,3,4]);
-```
+See [the docs](./docs/index.md) for details.
