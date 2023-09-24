@@ -473,22 +473,21 @@ trait CollectionTrait
             $columns = [$columns];
         }
 
-        $uniqueItems  = $this->reduce(function($result, $item) use ($columns) {
+        $keys        = [];
+        $uniqueItems = [];
+
+        foreach ($this->items as $index => $item) {
             $key = implode('|', array_map(function($column) use ($item) {
                 return $item[$column];
             }, $columns));
 
-            if (! isset($result['key'][$key])) {
-                $result['key'][$key]                = true;
-                $result['values'][$result['index']] = $item;
+            if (! isset($keys[$key])) {
+                $keys[$key]          = true;
+                $uniqueItems[$index] = $item;
             }
+        }
 
-            $result['index']++;
-
-            return $result;
-        }, ['index' => 0, 'key' => [], 'values' => []]);
-
-        return new static($uniqueItems['values']);
+        return new static($uniqueItems);
     }
 
     /**

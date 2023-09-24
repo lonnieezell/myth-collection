@@ -579,6 +579,23 @@ class InstanceTest extends TestCase
         ], $new->toArray());
     }
 
+    public function testUniqueWithColumnAndUnorderedArray()
+    {
+        $collection = new Collection([
+            2 => ['id' => 1, 'name' => 'John'],
+            3 => ['id' => 2, 'name' => 'Jane'],
+            0 => ['id' => 1, 'name' => 'Jim'],
+            1 => ['id' => 3, 'name' => 'Joe'],
+        ]);
+
+        $new = $collection->unique('id');
+        $this->assertEquals([
+            2 => ['id' => 1, 'name' => 'John'],
+            1 => ['id' => 3, 'name' => 'Joe'],
+            3 => ['id' => 2, 'name' => 'Jane'],
+        ], $new->toArray());
+    }
+
     public function testUniqueWithManyColumns()
     {
         $collection = new Collection([
