@@ -460,6 +460,38 @@ trait CollectionTrait
     }
 
     /**
+     * Returns a new collection with only unique items
+     * from the original collection.
+     */
+    public function unique($columns = null): Collection
+    {
+        if ($columns === null) {
+            return new static(array_unique($this->items));
+        }
+
+        if (is_string($columns)) {
+            $columns = [$columns];
+        }
+
+        $uniqueItems  = $this->reduce(function($result, $item) use ($columns) {
+            $key = implode('|', array_map(function($column) use ($item) {
+                return $item[$column];
+            }, $columns));
+
+            if (! isset($result['key'][$key])) {
+                $result['key'][$key]                = true;
+                $result['values'][$result['index']] = $item;
+            }
+
+            $result['index']++;
+
+            return $result;
+        }, ['index' => 0, 'key' => [], 'values' => []]);
+
+        return new static($uniqueItems['values']);
+    }
+
+    /**
      * Returns a new collection with the values of the collection
      */
     public function values()
