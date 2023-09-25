@@ -249,7 +249,7 @@ trait CollectionTrait
      *
      * @return int|string
      */
-    public function indexOf($value, bool $strict = false): int
+    public function indexOf($value, bool $strict = false)
     {
         $result = array_search($value, $this->items, $strict);
 
@@ -260,7 +260,7 @@ trait CollectionTrait
      * Return all values joined by a given string, where an
      * optional value can be inserted prior to the last value
      */
-    public function join(string $glue=null, string $lastValue = null): string
+    public function join(string $glue = '', string $lastValue = null): string
     {
         $items = $this->items;
 
@@ -268,7 +268,7 @@ trait CollectionTrait
             $items[count($items) -1] = $lastValue . $items[count($items) -1];
         }
 
-        return(implode($glue, $items));
+        return (implode($glue, $items));
     }
 
     /**
@@ -358,8 +358,10 @@ trait CollectionTrait
 
     /**
      * Shifts the first item off the collection and returns it.
+     *
+     * @return mixed|null
      */
-    public function shift(): mixed|null
+    public function shift()
     {
         return array_shift($this->items);
     }
@@ -455,6 +457,37 @@ trait CollectionTrait
         }
 
         return array_sum($result);
+    }
+
+    /**
+     * Returns a new collection with only unique items
+     * from the original collection.
+     */
+    public function unique($columns = null): Collection
+    {
+        if ($columns === null) {
+            return new static(array_unique($this->items));
+        }
+
+        if (is_string($columns)) {
+            $columns = [$columns];
+        }
+
+        $keys        = [];
+        $uniqueItems = [];
+
+        foreach ($this->items as $index => $item) {
+            $key = implode('|', array_map(function($column) use ($item) {
+                return is_array($item) ? $item[$column] : $item->{$column};
+            }, $columns));
+
+            if (! isset($keys[$key])) {
+                $keys[$key]          = true;
+                $uniqueItems[$index] = $item;
+            }
+        }
+
+        return new static($uniqueItems);
     }
 
     /**

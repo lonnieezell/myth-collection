@@ -34,29 +34,29 @@ echo $collection['b'];
 
 ## Available Methods
 
-|                             |                     |
-| --------------------------- | ------------------- |
-| [at](#at)                   | [average](#average) |
-| [count](#count)             | [each](#each)       |
-| [every](#every)             | [fill](#fill)       |
-| [filter](#filter)           | [find](#find)       |
-| [findIndex](#findIndex)     | [first](#first)     |
-| [flatten](#flatten)         | [groupBy](#groupBy) |
-| [includes](#includes)       | [isEmpty](#isEmpty) |
-| [indexOf](#indexOf)         | [items](#items)     |
-| [join](#join)               | [key](#key)         |
-| [keys](#keys)               | [last](#last)       |
-| [map](#map)                 | [merge](#merge)     |
-| [next](#next)               | [pop](#pop)         |
-| [prev](#prev)               | [push](#push)       |
-| [reduce](#reduce)           | [reverse](#reverse) |
-| [serialize](#serialize)     | [shift](#shift)     |
-| [slice](#slice)             | [sort](#sort)       |
-| [sortDesc](#sortDesc)       | [splice](#splice)   |
-| [sum](#sum)                 | [toArray](#toArray) |
-| [values](#values)           | [valid](#valid)     |
-| [when](#when)               | [unless](#unless)   |
-| [unserialize](#unserialize) |                     |
+|                         |                             |
+|-------------------------|-----------------------------|
+| [at](#at)               | [average](#average)         |
+| [count](#count)         | [each](#each)               |
+| [every](#every)         | [fill](#fill)               |
+| [filter](#filter)       | [find](#find)               |
+| [findIndex](#findIndex) | [first](#first)             |
+| [flatten](#flatten)     | [groupBy](#groupBy)         |
+| [includes](#includes)   | [isEmpty](#isEmpty)         |
+| [indexOf](#indexOf)     | [items](#items)             |
+| [join](#join)           | [key](#key)                 |
+| [keys](#keys)           | [last](#last)               |
+| [map](#map)             | [merge](#merge)             |
+| [next](#next)           | [pop](#pop)                 |
+| [prev](#prev)           | [push](#push)               |
+| [reduce](#reduce)       | [reverse](#reverse)         |
+| [serialize](#serialize) | [shift](#shift)             |
+| [slice](#slice)         | [sort](#sort)               |
+| [sortDesc](#sortDesc)   | [splice](#splice)           |
+| [sum](#sum)             | [toArray](#toArray)         |
+| [unique](#unique)       | [values](#values)           |
+| [valid](#valid)         | [when](#when)               |
+| [unless](#unless)       | [unserialize](#unserialize) |
 
 ### Creation
 
@@ -624,6 +624,33 @@ $collection = new Collection([
 ]);
 return $collection->sum('foo');
 // returns 100
+```
+
+#### unique()
+
+Returns a new collection with only unique items from the original collection.
+
+```php
+$collection = new Collection([1, 2, 2, 3, 1, 5, 1, 3]);
+return $collection->unique();
+// returns [0 => 1, 1 => 2, 3 => 3, 5 => 5]
+```
+
+You can also pass the column name as a `string` or multiple columns as `array` as parameter if you work with associative arrays or objects.
+
+```php
+$collection = new Collection([
+    ['id' => 1, 'name' => 'John'],
+    ['id' => 2, 'name' => 'Jane'],
+    ['id' => 1, 'name' => 'Jim'],
+    ['id' => 3, 'name' => 'Joe'],
+]);
+return $collection->unique('id');
+// returns [
+//    0 => ['id' => 1, 'name' => 'John'],
+//    1 => ['id' => 2, 'name' => 'Jane'],
+//    3 => ['id' => 3, 'name' => 'Joe'],
+//]
 ```
 
 #### values()

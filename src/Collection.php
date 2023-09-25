@@ -82,7 +82,7 @@ class Collection implements ArrayAccess, Countable, \Serializable
     /**
      * Returns the value at the specified offset, or null if not set
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return isset($this->items[$offset])
             ? $this->items[$offset]

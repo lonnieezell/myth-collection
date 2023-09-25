@@ -550,6 +550,87 @@ class InstanceTest extends TestCase
         }));
     }
 
+    public function testUnique()
+    {
+        $collection = new Collection([1, 2, 2, 3, 1, 5, 1, 3]);
+        $new = $collection->unique();
+        $this->assertEquals([
+            0 => 1,
+            1 => 2,
+            3 => 3,
+            5 => 5,
+        ], $new->toArray());
+    }
+
+    public function testUniqueWithColumn()
+    {
+        $collection = new Collection([
+            ['id' => 1, 'name' => 'John'],
+            ['id' => 2, 'name' => 'Jane'],
+            ['id' => 1, 'name' => 'Jim'],
+            ['id' => 3, 'name' => 'Joe'],
+        ]);
+
+        $new = $collection->unique('id');
+        $this->assertEquals([
+            0 => ['id' => 1, 'name' => 'John'],
+            1 => ['id' => 2, 'name' => 'Jane'],
+            3 => ['id' => 3, 'name' => 'Joe'],
+        ], $new->toArray());
+    }
+
+    public function testUniqueWithColumnAndObjects()
+    {
+        $collection = new Collection([
+            (object) ['id' => 1, 'name' => 'John'],
+            (object) ['id' => 2, 'name' => 'Jane'],
+            (object) ['id' => 1, 'name' => 'Jim'],
+            (object) ['id' => 3, 'name' => 'Joe'],
+        ]);
+
+        $new = $collection->unique('id');
+        $this->assertEquals([
+            0 => (object) ['id' => 1, 'name' => 'John'],
+            1 => (object) ['id' => 2, 'name' => 'Jane'],
+            3 => (object) ['id' => 3, 'name' => 'Joe'],
+        ], $new->toArray());
+    }
+
+    public function testUniqueWithColumnAndUnorderedArray()
+    {
+        $collection = new Collection([
+            2 => ['id' => 1, 'name' => 'John'],
+            3 => ['id' => 2, 'name' => 'Jane'],
+            0 => ['id' => 1, 'name' => 'Jim'],
+            1 => ['id' => 3, 'name' => 'Joe'],
+        ]);
+
+        $new = $collection->unique('id');
+        $this->assertEquals([
+            2 => ['id' => 1, 'name' => 'John'],
+            1 => ['id' => 3, 'name' => 'Joe'],
+            3 => ['id' => 2, 'name' => 'Jane'],
+        ], $new->toArray());
+    }
+
+    public function testUniqueWithManyColumns()
+    {
+        $collection = new Collection([
+            ['id' => 1, 'name' => 'John', 'age' => 30],
+            ['id' => 2, 'name' => 'Jane', 'age' => 35],
+            ['id' => 1, 'name' => 'Jim', 'age' => 30],
+            ['id' => 2, 'name' => 'Janet', 'age' => 35],
+            ['id' => 3, 'name' => 'Joe', 'age' => 30],
+        ]);
+
+        $new = $collection->unique(['id', 'age']);
+        $this->assertEquals([
+            0 => ['id' => 1, 'name' => 'John', 'age' => 30],
+            1 => ['id' => 2, 'name' => 'Jane', 'age' => 35],
+            4 => ['id' => 3, 'name' => 'Joe', 'age' => 30],
+        ], $new->toArray());
+    }
+
     // test values method
     public function testValues()
     {
