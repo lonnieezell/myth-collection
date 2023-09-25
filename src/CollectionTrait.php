@@ -478,7 +478,7 @@ trait CollectionTrait
 
         foreach ($this->items as $index => $item) {
             $key = implode('|', array_map(function($column) use ($item) {
-                return $item[$column];
+                return is_array($item) ? $item[$column] : $item->{$column};
             }, $columns));
 
             if (! isset($keys[$key])) {

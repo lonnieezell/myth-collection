@@ -636,7 +636,7 @@ return $collection->unique();
 // returns [0 => 1, 1 => 2, 3 => 3, 5 => 5]
 ```
 
-You can also pass the column name as a `string` or multiple columns as `array` as parameter if you work with associative arrays.
+You can also pass the column name as a `string` or multiple columns as `array` as parameter if you work with associative arrays or objects.
 
 ```php
 $collection = new Collection([
