@@ -35,6 +35,43 @@ class InstanceTest extends TestCase
         $this->assertEquals('bar', $collection->key());
     }
 
+    public function testDiff()
+    {
+        $collection = new Collection(['foo', 'bar', 'baz']);
+        $new = $collection->diff(['foo', 'baz']);
+        $this->assertSame([1 => 'bar'], $new->toArray());
+    }
+
+    public function testDiffWithColumn()
+    {
+        $collection = new Collection([
+            ['name' => 'John Doe 1', 'age' => 25],
+            ['name' => 'Jane Doe 2', 'age' => 30],
+            ['name' => 'John Doe 3', 'age' => 25],
+        ]);
+        $new = $collection->diff([
+            ['name' => 'John Doe 1', 'age' => 25],
+            ['name' => 'John Doe 3', 'age' => 25],
+        ], 'name');
+        $this->assertSame([1 => ['name' => 'Jane Doe 2', 'age' => 30]], $new->toArray());
+    }
+
+    public function testDiffWithColumns()
+    {
+        $collection = new Collection([
+            ['id' => 1, 'name' => 'John Doe', 'age' => 15],
+            ['id' => 2, 'name' => 'Jane Doe', 'age' => 30],
+            ['id' => 3, 'name' => 'John Doe', 'age' => 25],
+            ['id' => 4, 'name' => 'John Doe', 'age' => 25],
+        ]);
+        $new = $collection->diff([
+            ['id' => 1, 'name' => 'John Doe', 'age' => 25],
+            ['id' => 2, 'name' => 'Jane Doe', 'age' => 30],
+            ['id' => 4, 'name' => 'John Doe', 'age' => 25],
+        ], ['name', 'age']);
+        $this->assertSame([['id' => 1, 'name' => 'John Doe', 'age' => 15]], $new->toArray());
+    }
+
     public function testEach()
     {
         $collection = new Collection(['foo' => 'bar', 'bar' => 'baz']);
