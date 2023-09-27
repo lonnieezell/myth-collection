@@ -98,6 +98,10 @@ trait CollectionTrait
      */
     public function diff($array, $columns = null)
     {
+        if ($array instanceof Collection) {
+            $array = $array->toArray();
+        }
+        
         if ($columns === null) {
             return new static(array_diff($this->items, $array));
         }
