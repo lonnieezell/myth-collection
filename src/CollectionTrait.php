@@ -93,6 +93,36 @@ trait CollectionTrait
     }
 
     /**
+     * Returns a new collection from the original collection
+     * with only different items from passed in array or collection.
+     */
+    public function diff($array, $columns = null)
+    {
+        if ($array instanceof Collection) {
+            $array = $array->toArray();
+        }
+        
+        if ($columns === null) {
+            return new static(array_diff($this->items, $array));
+        }
+
+        if (is_string($columns)) {
+            $columns = [$columns];
+        }
+
+        return new static(array_udiff(
+            $this->items,
+            $array,
+            function ($a, $b) use ($columns) {
+                $keyA = $this->generateKeyFromColumns($a, $columns);
+                $keyB = $this->generateKeyFromColumns($b, $columns);
+
+                return $keyA <=> $keyB;
+            }
+        ));
+    }
+
+    /**
      * Run the callable on each item in the collection.
      * You can stop processing the collection by returning false.
      */
@@ -477,9 +507,7 @@ trait CollectionTrait
         $uniqueItems = [];
 
         foreach ($this->items as $index => $item) {
-            $key = implode('|', array_map(function($column) use ($item) {
-                return is_array($item) ? $item[$column] : $item->{$column};
-            }, $columns));
+            $key = $this->generateKeyFromColumns($item, $columns);
 
             if (! isset($keys[$key])) {
                 $keys[$key]          = true;
@@ -538,5 +566,20 @@ trait CollectionTrait
         }
 
         return new static($result);
+    }
+
+    /*----------------------------------------------------------
+     * Helper Methods
+     *--------------------------------------------------------*/
+
+    /**
+     * Generate a key from array or object,
+     * to represent a unique item representation.
+     */
+    private function generateKeyFromColumns($item, $columns)
+    {
+        return implode('|', array_map(function($column) use ($item) {
+            return is_array($item) ? $item[$column] : $item->{$column};
+        }, $columns));
     }
 }

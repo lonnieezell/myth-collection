@@ -37,26 +37,27 @@ echo $collection['b'];
 |                         |                             |
 |-------------------------|-----------------------------|
 | [at](#at)               | [average](#average)         |
-| [count](#count)         | [each](#each)               |
-| [every](#every)         | [fill](#fill)               |
-| [filter](#filter)       | [find](#find)               |
-| [findIndex](#findIndex) | [first](#first)             |
-| [flatten](#flatten)     | [groupBy](#groupBy)         |
-| [includes](#includes)   | [isEmpty](#isEmpty)         |
-| [indexOf](#indexOf)     | [items](#items)             |
-| [join](#join)           | [key](#key)                 |
-| [keys](#keys)           | [last](#last)               |
-| [map](#map)             | [merge](#merge)             |
-| [next](#next)           | [pop](#pop)                 |
-| [prev](#prev)           | [push](#push)               |
-| [reduce](#reduce)       | [reverse](#reverse)         |
-| [serialize](#serialize) | [shift](#shift)             |
-| [slice](#slice)         | [sort](#sort)               |
-| [sortDesc](#sortDesc)   | [splice](#splice)           |
-| [sum](#sum)             | [toArray](#toArray)         |
-| [unique](#unique)       | [values](#values)           |
-| [valid](#valid)         | [when](#when)               |
-| [unless](#unless)       | [unserialize](#unserialize) |
+| [count](#count)         | [diff](#diff)               |
+| [each](#each)           | [every](#every)             |
+| [filter](#filter)       | [fill](#fill)               |
+| [find](#find)           | [findIndex](#findIndex)     |
+| [first](#first)         | [flatten](#flatten)         |
+| [groupBy](#groupBy)     | [includes](#includes)       |
+| [isEmpty](#isEmpty)     | [indexOf](#indexOf)         |
+| [items](#items)         | [join](#join)               |
+| [key](#key)             | [keys](#keys)               |
+| [last](#last)           | [map](#map)                 |
+| [merge](#merge)         | [next](#next)               |
+| [pop](#pop)             | [prev](#prev)               |
+| [push](#push)           | [reduce](#reduce)           |
+| [reverse](#reverse)     | [serialize](#serialize)     |
+| [shift](#shift)         | [slice](#slice)             |
+| [sort](#sort)           | [sortDesc](#sortDesc)       |
+| [splice](#splice)       | [sum](#sum)                 |
+| [toArray](#toArray)     | [unique](#unique)           |
+| [values](#values)       | [valid](#valid)             |
+| [when](#when)           | [unless](#unless)           |
+| [unserialize](#unserialize) |
 
 ### Creation
 
@@ -234,6 +235,31 @@ $collection = new Collection([
 ]);
 return $collection->average('foo');
 // returns 25
+```
+
+#### diff()
+
+Returns a new collection from the original collection with only different items from passed in array or collection.
+
+```php
+$collection = new Collection(['foo', 'bar', 'baz']);
+return $collection->diff(['foo', 'baz']);
+// returns [1 => 'bar']
+```
+
+You can also pass the column name as a `string` or multiple columns as `array` as a second parameter if you work with associative arrays or objects.
+
+```php
+$collection = new Collection([
+    ['name' => 'John Doe 1', 'age' => 25],
+    ['name' => 'Jane Doe 2', 'age' => 30],
+    ['name' => 'John Doe 3', 'age' => 25],
+]);
+return $collection->diff([
+    ['name' => 'John Doe 1', 'age' => 25],
+    ['name' => 'John Doe 3', 'age' => 25],
+], 'name');
+// returns [1 => ['name' => 'Jane Doe 2', 'age' => 30]]
 ```
 
 #### each()
