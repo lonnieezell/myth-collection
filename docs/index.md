@@ -252,6 +252,7 @@ return $collection->column('name');
 ```
 
 If an index is provided, the values from this column will be used as keys for the returned result in the collection.
+
 ```php
 $collection = new Collection([
     (object) ['id' => 1, 'name' => 'John'],
