@@ -94,6 +94,17 @@ trait CollectionTrait
 
     /**
      * Returns a new collection from the original collection
+     * with single column of collection. If an index is provided,
+     * the values from this column will be used as keys for the
+     * returned result in the collection.
+     */
+    public function column($column, $index = null)
+    {
+        return new static(array_column($this->items, $column, $index));
+    }
+
+    /**
+     * Returns a new collection from the original collection
      * with only different items from passed in array or collection.
      */
     public function diff($array, $columns = null)

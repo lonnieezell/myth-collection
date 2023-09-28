@@ -35,6 +35,43 @@ class InstanceTest extends TestCase
         $this->assertEquals('bar', $collection->key());
     }
 
+    public function testColumn()
+    {
+        $collection = new Collection([
+            ['id' => 1, 'name' => 'John'],
+            ['id' => 2, 'name' => 'Carter'],
+            ['id' => 3, 'name' => 'Steve'],
+        ]);
+        $new = $collection->column('name');
+        $this->assertSame(['John', 'Carter', 'Steve'], $new->toArray());
+    }
+
+    public function testColumnWithColumnAndIndex()
+    {
+        $collection = new Collection([
+            (object) ['id' => 1, 'name' => 'John'],
+            (object) ['id' => 2, 'name' => 'Carter'],
+            (object) ['id' => 3, 'name' => 'Steve'],
+        ]);
+        $new = $collection->column('name', 'id');
+        $this->assertSame([1 => 'John', 2 => 'Carter', 3 => 'Steve'], $new->toArray());
+    }
+
+    public function testColumnWithIndex()
+    {
+        $collection = new Collection([
+            (object) ['id' => 1, 'name' => 'John'],
+            (object) ['id' => 2, 'name' => 'Carter'],
+            (object) ['id' => 3, 'name' => 'Steve'],
+        ]);
+        $new = $collection->column(null, 'id');
+        $this->assertEquals([
+            1 => (object) ['id' => 1, 'name' => 'John'],
+            2 => (object) ['id' => 2, 'name' => 'Carter'],
+            3 => (object) ['id' => 3, 'name' => 'Steve'],
+        ], $new->toArray());
+    }
+
     public function testDiff()
     {
         $collection = new Collection(['foo', 'bar', 'baz']);
