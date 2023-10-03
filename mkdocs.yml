@@ -1,0 +1,45 @@
+site_name: Myth:collection
+site_description: Documentation for a Collection library for PHP projects.
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+  palette:
+    scheme: slate
+    primary: deep-purple
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  # highlight_js: true
+  # hljs_style: github_dark
+  # hljs_languages:
+  #   - php
+
+extra:
+  homepage: https://lonnieezell.github.io/myth-collection
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/lonnieezell/myth-collection
+      name: GitHub
+
+repo_url: https://github.com/lonnieezell/myth-collection
+edit_uri: edit/develop/docs/
+
+extra_css:
+  - assets/github-dark-dimmed.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js
+
+nav:
+  - Home: index.md
