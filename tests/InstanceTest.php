@@ -547,6 +547,27 @@ class InstanceTest extends TestCase
         $this->assertEquals([4, 5], $new->toArray());
     }
 
+    public function testTake()
+    {
+        $collection = new Collection([1, 2, 3, 4, 5]);
+        $new = $collection->take(2);
+        $this->assertEquals([1, 2], $new->toArray());
+    }
+
+    public function testTakeNegative()
+    {
+        $collection = new Collection([1, 2, 3, 4, 5]);
+        $new = $collection->take(-2);
+        $this->assertEquals([4, 5], $new->toArray());
+    }
+
+    public function testTakeNegativeWithPreservedKeys()
+    {
+        $collection = new Collection([1, 2, 3, 4, 5]);
+        $new = $collection->take(-2, true);
+        $this->assertEquals([3 => 4, 4 => 5], $new->toArray());
+    }
+
     public function testSort()
     {
         $collection = new Collection([3, 1, 5, 2, 4]);
