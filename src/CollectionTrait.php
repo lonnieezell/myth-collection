@@ -411,9 +411,21 @@ trait CollectionTrait
      * Returns a collection with a slice of the items
      * starting at the given index
      */
-    public function slice(int $start, int $end = null): Collection
+    public function slice(int $start, int $end = null, bool $preserveKeys = false): Collection
     {
-        return new static(array_slice($this->items, $start, $end));
+        return new static(array_slice($this->items, $start, $end, $preserveKeys));
+    }
+
+    /**
+     * Returns a collection with the first or last items based on $limit
+     */
+    public function take(int $limit, bool $preserveKeys = false): Collection
+    {
+        if ($limit < 0) {
+            return $this->slice($limit, abs($limit), $preserveKeys);
+        }
+
+        return $this->slice(0, $limit, $preserveKeys);
     }
 
     /**

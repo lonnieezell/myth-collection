@@ -34,30 +34,32 @@ echo $collection['b'];
 
 ## Available Methods
 
-|                         |                             |
-|-------------------------|-----------------------------|
-| [at](#at)               | [average](#average)         |
-| [count](#count)         | [column](#column)           |
-| [diff](#diff)           | [each](#each)               |
-| [every](#every)         | [filter](#filter)           |
-| [fill](#fill)           | [find](#find)               |
-| [findIndex](#findIndex) | [first](#first)             |
-| [flatten](#flatten)     | [groupBy](#groupBy)         |
-| [includes](#includes)   | [isEmpty](#isEmpty)         |
-| [indexOf](#indexOf)     | [items](#items)             |
-| [join](#join)           | [key](#key)                 |
-| [keys](#keys)           | [last](#last)               |
-| [map](#map)             | [merge](#merge)             |
-| [next](#next)           | [pop](#pop)                 |
-| [prev](#prev)           | [push](#push)               |
-| [reduce](#reduce)       | [reverse](#reverse)         |
-| [serialize](#serialize) | [shift](#shift)             |
-| [slice](#slice)         | [sort](#sort)               |
-| [sortDesc](#sortDesc)   | [splice](#splice)           |
-| [sum](#sum)             | [toArray](#toArray)         |
-| [unique](#unique)       | [values](#values)           |
-| [valid](#valid)         | [when](#when)               |
-| [unless](#unless)       | [unserialize](#unserialize) |
+|                             |                     |
+|-----------------------------|---------------------|
+| [at](#at)                   | [average](#average) |
+| [count](#count)             | [column](#column)   |
+| [diff](#diff)               | [each](#each)       |
+| [every](#every)             | [filter](#filter)   |
+| [fill](#fill)               | [find](#find)       |
+| [findIndex](#findIndex)     | [first](#first)     |
+| [flatten](#flatten)         | [groupBy](#groupBy) |
+| [includes](#includes)       | [isEmpty](#isEmpty) |
+| [indexOf](#indexOf)         | [items](#items)     |
+| [join](#join)               | [key](#key)         |
+| [keys](#keys)               | [last](#last)       |
+| [map](#map)                 | [merge](#merge)     |
+| [next](#next)               | [pop](#pop)         |
+| [prev](#prev)               | [push](#push)       |
+| [reduce](#reduce)           | [reverse](#reverse) |
+| [serialize](#serialize)     | [shift](#shift)     |
+| [slice](#slice)             | [sort](#sort)       |
+| [sortDesc](#sortDesc)       | [splice](#splice)   |
+| [sum](#sum)                 | [take](#take)       |
+| [toArray](#toArray)         | [values](#values)   |
+| [unique](#unique)           | [valid](#valid)     |
+| [when](#when)               | [unless](#unless)   |
+| [unserialize](#unserialize) |                     |
+
 
 ### Creation
 
@@ -676,6 +678,32 @@ $collection = new Collection([
 ]);
 return $collection->sum('foo');
 // returns 100
+```
+
+#### take()
+
+Returns a collection with the first or last items based on `$limit`.
+
+```php
+$collection = new Collection([1, 2, 3, 4, 5]);
+return $collection->take(2);
+// returns [1, 2]
+```
+
+You can also use negative number, to get items from the end of collection.
+
+```php
+$collection = new Collection([1, 2, 3, 4, 5]);
+return $collection->take(-2);
+// returns [4, 5]
+```
+
+To preverse keys, you can use the second parameter:
+
+```php
+$collection = new Collection([1, 2, 3, 4, 5]);
+return $collection->take(-2, true);
+// returns [3 => 4, 4 => 5]
 ```
 
 #### unique()
