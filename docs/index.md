@@ -34,32 +34,31 @@ echo $collection['b'];
 
 ## Available Methods
 
-|                             |                     |
-|-----------------------------|---------------------|
-| [at](#at)                   | [average](#average) |
-| [count](#count)             | [column](#column)   |
-| [diff](#diff)               | [each](#each)       |
-| [every](#every)             | [filter](#filter)   |
-| [fill](#fill)               | [find](#find)       |
-| [findIndex](#findIndex)     | [first](#first)     |
-| [flatten](#flatten)         | [groupBy](#groupBy) |
-| [includes](#includes)       | [isEmpty](#isEmpty) |
-| [indexOf](#indexOf)         | [items](#items)     |
-| [join](#join)               | [key](#key)         |
-| [keys](#keys)               | [last](#last)       |
-| [map](#map)                 | [merge](#merge)     |
-| [next](#next)               | [pop](#pop)         |
-| [prev](#prev)               | [push](#push)       |
-| [reduce](#reduce)           | [reverse](#reverse) |
-| [serialize](#serialize)     | [shift](#shift)     |
-| [slice](#slice)             | [sort](#sort)       |
-| [sortDesc](#sortDesc)       | [splice](#splice)   |
-| [sum](#sum)                 | [take](#take)       |
-| [toArray](#toArray)         | [values](#values)   |
-| [unique](#unique)           | [valid](#valid)     |
-| [when](#when)               | [unless](#unless)   |
-| [unserialize](#unserialize) |                     |
-
+|                         |                               |
+| ----------------------- | ----------------------------- |
+| [at](#at)               | [average](#average)           |
+| [count](#count)         | [column](#column)             |
+| [diff](#diff)           | [each](#each)                 |
+| [every](#every)         | [filter](#filter)             |
+| [fill](#fill)           | [find](#find)                 |
+| [findIndex](#findIndex) | [first](#first)               |
+| [flatten](#flatten)     | [groupBy](#groupBy)           |
+| [includes](#includes)   | [isEmpty](#isEmpty)           |
+| [indexOf](#indexOf)     | [items](#items)               |
+| [join](#join)           | [key](#key)                   |
+| [keys](#keys)           | [last](#last)                 |
+| [map](#map)             | [merge](#merge)               |
+| [next](#next)           | [pop](#pop)                   |
+| [prev](#prev)           | [push](#push)                 |
+| [reduce](#reduce)       | [reverse](#reverse)           |
+| [serialize](#serialize) | [shift](#shift)               |
+| [slice](#slice)         | [sort](#sort)                 |
+| [sortDesc](#sortDesc)   | [splice](#splice)             |
+| [sum](#sum)             | [take](#take)                 |
+| [toArray](#toArray)     | [toFixedArray](#tofixedarray) |
+| [values](#values)       | [unique](#unique)             |
+| [valid](#valid)         | [when](#when)                 |
+| [unless](#unless)       | [unserialize](#unserialize)   |
 
 ### Creation
 
@@ -125,6 +124,16 @@ Returns the items in the collection as an array.
 $collection = new Collection(['foo', 'bar', 'baz']);
 return $collection->toArray();
 // $collection = ['foo', 'bar', 'baz']
+```
+
+#### toFixedArray()
+
+Returns the items in the collection as an instance of SplFixedArray.
+Fixed arrays use significantly less memory and have better performance.
+
+```php
+$collection = new Collection(['foo', 'bar', 'baz']);
+return $collection->toFixedArray();
 ```
 
 #### items()
@@ -241,7 +250,7 @@ return $collection->average('foo');
 
 #### column()
 
-Returns a new collection from the original collection with single column of collection. 
+Returns a new collection from the original collection with single column of collection.
 
 ```php
 $collection = new Collection([

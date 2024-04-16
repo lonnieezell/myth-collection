@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Myth\Collection\Collection;
+use SplFixedArray;
 
 class InstanceTest extends TestCase
 {
@@ -788,5 +789,13 @@ class InstanceTest extends TestCase
             return $item % 2 === 0;
         });
         $this->assertEquals(['a' => 1, 'c' => 3, 'e' => 5], $new->toArray());
+    }
+
+    public function testToFixedArray()
+    {
+        $collection = new Collection([1, 2, 3, 4, 5]);
+        $new = $collection->toFixedArray();
+        $this->assertInstanceOf(SplFixedArray::class, $new);
+        $this->assertEquals([1, 2, 3, 4, 5], $new->toArray());
     }
 }

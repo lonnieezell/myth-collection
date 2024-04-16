@@ -2,6 +2,8 @@
 
 namespace Myth\Collection;
 
+use SplFixedArray;
+
 trait CollectionTrait
 {
     protected array $items = [];
@@ -12,6 +14,15 @@ trait CollectionTrait
     public function toArray()
     {
         return $this->items;
+    }
+
+    /**
+     * Returns the collection of items as a SPLFixedArray
+     * for much lower memory usage, and a bit more speed.
+     */
+    public function toFixedArray(): SplFixedArray
+    {
+        return SplFixedArray::fromArray($this->items);
     }
 
     /**
@@ -112,7 +123,7 @@ trait CollectionTrait
         if ($array instanceof Collection) {
             $array = $array->toArray();
         }
-        
+
         if ($columns === null) {
             return new static(array_diff($this->items, $array));
         }
@@ -601,7 +612,7 @@ trait CollectionTrait
      */
     private function generateKeyFromColumns($item, $columns)
     {
-        return implode('|', array_map(function($column) use ($item) {
+        return implode('|', array_map(function ($column) use ($item) {
             return is_array($item) ? $item[$column] : $item->{$column};
         }, $columns));
     }
