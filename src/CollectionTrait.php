@@ -81,7 +81,7 @@ trait CollectionTrait
      * Returns the average of all items in the collection.
      * If $key is present, will return the average of that key.
      */
-    public function average(string $key = null)
+    public function average(?string $key = null)
     {
         $items = $this->items;
 
@@ -162,7 +162,7 @@ trait CollectionTrait
      * start index to an end index with a static value.
      * If end index is not specified, it will fill to the end of the collection.
      */
-    public function fill(int $start, int $end=null, $value)
+    public function fill(int $start, ?int $end, $value)
     {
         $end = $end ?? count($this->items) -1;
         if ($end <= 0) {
@@ -301,7 +301,7 @@ trait CollectionTrait
      * Return all values joined by a given string, where an
      * optional value can be inserted prior to the last value
      */
-    public function join(string $glue = '', string $lastValue = null): string
+    public function join(string $glue = '', ?string $lastValue = null): string
     {
         $items = $this->items;
 
@@ -411,7 +411,7 @@ trait CollectionTrait
      * Returns a collection with a slice of the items
      * starting at the given index
      */
-    public function slice(int $start, int $end = null, bool $preserveKeys = false): Collection
+    public function slice(int $start, ?int $end = null, bool $preserveKeys = false): Collection
     {
         return new static(array_slice($this->items, $start, $end, $preserveKeys));
     }
@@ -432,7 +432,7 @@ trait CollectionTrait
      * Returns a new collection with the items sorted in ascending
      * order by the given callback.
      */
-    public function sort(callable $callback=null): Collection
+    public function sort(?callable $callback = null): Collection
     {
         $items = $this->items;
 
@@ -456,7 +456,7 @@ trait CollectionTrait
      * Returns a new collection with the items sorted in descending
      * order by the given callback.
      */
-    public function sortDesc(callable $callback=null): Collection
+    public function sortDesc(?callable $callback = null): Collection
     {
         $items = $this->items;
 
@@ -480,7 +480,7 @@ trait CollectionTrait
      * Returns a new collection with the portion of the items of the collection
      * either removed or replaced with a new item(s).
      */
-    public function splice(int $offset, int $length=null, ...$replacements): Collection
+    public function splice(int $offset, ?int $length = null, ...$replacements): Collection
     {
         if ($length === null) {
             $length = count($this->items) - $offset;

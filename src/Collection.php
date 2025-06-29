@@ -37,7 +37,7 @@ class Collection implements ArrayAccess, Countable, \Serializable
      * Generates an instance of the Collection class from
      * iteratable class or object.
      */
-    public static function from($items, callable $callback = null)
+    public static function from($items, ?callable $callback = null)
     {
         if ($items instanceof Collection) {
             $items = $items->toArray();
